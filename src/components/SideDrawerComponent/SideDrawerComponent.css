@@ -1,6 +1,11 @@
 .side-drawer {
-    background-color: rgb(207, 201, 201) !important;
-   
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 250px;
+  background-color: rgb(207, 201, 201) !important;
+  z-index: 1;
   }
   
   .circle {
@@ -28,10 +33,14 @@
     font-weight: bold;
   }
   
-  .icon {
-    color: rgb(207, 201, 201);
-    margin-right: 10px;
-    border: 1px solid black;
-    border-radius: 20px;
+  .menu-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
+  
+  .fa-circle-o{
+    font-size:24px
+  }
+
   

@@ -1,0 +1,27 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+  }
+  
+  .content-container {
+    display: flex;
+    flex: 1;
+  }
+  
+  .side-drawer {
+    width: 250px;
+    background-color: rgb(207, 201, 201);
+    position: absolute;
+    top: 70px;
+    bottom: 0;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px; 
+    margin-top: 50px;
+  }
+  

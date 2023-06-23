@@ -1,48 +1,55 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout, Menu } from 'antd';
-import './SideDrawerComponent.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserResources } from '../../Redux/actions/usersActions';
+import routes from './../../Routes/routes';
+
 const { Sider } = Layout;
 
-
 const SideDrawerComponent = () => {
-    return (
-      <div class="drawer">
-        <Sider width={250}  className="side-drawer">
-          <Menu mode="inline" className="compartments">
-            <Menu.Item key="1">
-              <FontAwesomeIcon icon={faCircle} className="icon" />
-              <span className="compartment-name">User Details</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <FontAwesomeIcon icon={faCircle} className="icon " />
-              <span className="compartment-name">Account Details</span>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <FontAwesomeIcon icon={faCircle} className="icon" />
-              <span className="compartment-name">Onboarding</span>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <FontAwesomeIcon icon={faCircle} className="icon" />
-              <span className="compartment-name">System Details</span>
-            </Menu.Item>
-            <Menu.Item key="5">
-              <FontAwesomeIcon icon={faCircle} className="icon" />
-              <span className="compartment-name">Batch Process</span>
-            </Menu.Item>
-            <Menu.Item key="6">
-              <FontAwesomeIcon icon={faCircle} className="icon" />
-              <span className="compartment-name">Reports</span>
-            </Menu.Item>
-            <Menu.Item key="7">
-              <FontAwesomeIcon icon={faCircle} className="icon" />
-              <span className="compartment-name">Users</span>
-            </Menu.Item>
-          </Menu>
-        </Sider>
-      </div>
-    );
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { userResources, loading, error } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(fetchUserResources('123456'));
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  const handleNavigation = (path) => {
+    navigate(path);
   };
-  
-  export default SideDrawerComponent;
+
+  return (
+    <div className="drawer">
+      <Sider width={250} className="side-drawer">
+        <div className="menu-container">
+          <Menu mode="inline" className="compartments" selectedKeys={[location.pathname]}>
+            {userResources.map((item) => {
+              const route = routes.find((routeItem) => routeItem.title === item.title);
+              if (route) {
+                return (
+                  <Menu.Item key={item.key} onClick={() => handleNavigation(route.path)}>
+                    <span className="compartment-name">{item.title}</span>
+                  </Menu.Item>
+                );
+              }
+              return null;
+            })}
+          </Menu>
+        </div>
+      </Sider>
+    </div>
+  );
+};
+
+export default SideDrawerComponent;
