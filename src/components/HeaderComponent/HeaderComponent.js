@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Typography } from 'antd';
+import { Layout, Typography, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../Redux/actions/LoginActions';
 import './HeaderComponent.css';
@@ -11,7 +11,17 @@ const HeaderComponent = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logout());
+    console.log('hello');
+    Modal.confirm({
+      title: 'Logout',
+      content: 'Are you sure you want to logout?',
+      onOk: () => {
+        dispatch(logout());
+      },
+      onCancel: () => {},
+      okText: 'Yes',
+      cancelText: 'No',
+    });
   };
 
   return (
@@ -20,7 +30,7 @@ const HeaderComponent = () => {
         <Title level={3} className="header-title">
           LMS PORTAL
         </Title>
-        <div class="row">
+        <div className="row">
           <div className="logout-info">
             <span>Sidhant Kumar</span>
             <span onClick={handleLogout}> | Logout</span>

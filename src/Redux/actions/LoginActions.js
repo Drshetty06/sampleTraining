@@ -3,9 +3,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
 
-
 const API_URL = 'http://localhost:8085/authenticate';
-
 
 export const loginRequest = (email, password) => {
   return async (dispatch) => {

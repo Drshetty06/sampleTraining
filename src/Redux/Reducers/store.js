@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import usersReducer from './usersReducer';
 import authReducer from './authReducer';
 import rolesReducer from './FetchReducers';
+import roleReducer from './roleReducer';
 
 const rootReducer = combineReducers({
   users: usersReducer,
   auth: authReducer,
-  roles: rolesReducer
+  roles: rolesReducer,
+  role: roleReducer
 });
 
 

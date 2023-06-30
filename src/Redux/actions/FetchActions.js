@@ -2,7 +2,6 @@ export const FETCH_ROLES_REQUEST = 'FETCH_ROLES_REQUEST';
 export const FETCH_ROLES_SUCCESS = 'FETCH_ROLES_SUCCESS';
 export const FETCH_ROLES_FAILURE = 'FETCH_ROLES_FAILURE';
 
-
 export const fetchRolesRequest = () => {
   return {
     type: FETCH_ROLES_REQUEST
@@ -23,7 +22,6 @@ export const fetchRolesFailure = (error) => {
   };
 };
 
-
 export const fetchRoles = () => {
   return async (dispatch) => {
     dispatch(fetchRolesRequest());
@@ -34,7 +32,7 @@ export const fetchRoles = () => {
         },
       });
       const data = await response.json();
-      dispatch(fetchRolesSuccess(data));
+      dispatch(fetchRolesSuccess(data.content));
     } catch (error) {
       dispatch(fetchRolesFailure(error.message));
     }

@@ -7,10 +7,12 @@ import LoginForm from './components/LoginForm/LoginForm';
 import Users from './container/UserContainer/UserContainer';
 import HomePage from './container/HomePage/HomePage';
 import BatchProcess from './container/BatchProcess/BatchProcess';
+import CreateRole from './container/CreateRole/CreateRole';
 import './App.css';
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+  console.log(isAuthenticated);
 
   const ProtectedRoute = ({ element: Component, ...props }) => {
     return isAuthenticated ? <Component {...props} /> : <Navigate to="/" replace={true} />;
@@ -18,16 +20,25 @@ const App = () => {
 
   return (
     <div className="app-container">
-      {isAuthenticated && <HeaderComponent />}
+      {isAuthenticated && (
+        <>
+          <HeaderComponent />
+          <SideDrawerComponent />
+        </>
+      )}
       <div className="content-container">
-        {isAuthenticated && <SideDrawerComponent />}
-
         <div className="main-content">
           <Routes>
-            <Route path="/" element={<LoginForm />} />
-            <Route path="/Users" element={<ProtectedRoute element={Users} />} />
-            <Route path="/HomePage" element={<ProtectedRoute element={HomePage} />} />
-            <Route path="/BatchProcess" element={<ProtectedRoute element={BatchProcess} />} />
+            {isAuthenticated ? (
+              <>
+                <Route path="/Users" element={<ProtectedRoute element={Users} />} />
+                <Route path="/HomePage" element={<ProtectedRoute element={HomePage} />} />
+                <Route path="/BatchProcess" element={<ProtectedRoute element={BatchProcess} />} />
+                <Route path="/CreateRole" element={<ProtectedRoute element={CreateRole} />} />
+              </>
+            ) : (
+              <Route path="/" element={<LoginForm />} />
+            )}
           </Routes>
         </div>
       </div>

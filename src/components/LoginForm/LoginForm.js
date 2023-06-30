@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Alert } from 'antd';
 import './LoginForm.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
   const loginError = useSelector((state) => state.auth.error);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
 
   const handleUsernameChange = () => {
     form.validateFields(['username']);
@@ -35,6 +35,14 @@ const LoginForm = () => {
         setIsFormValid(false);
       });
   };
+
+  useEffect(() => {
+    console.log('entry', isAuthenticated);
+    if (isAuthenticated) {
+      console.log('entry here');
+      navigate("/HomePage")
+    }
+  }, []);
 
   const handleFormSubmit = async (values) => {
     try {
